@@ -1,9 +1,6 @@
 ﻿using GestorPacientes.Core.Domain.Common;
 using GestorPacientes.Core.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace GestorPacientes.Infrastucture.Persistance.Contexts
 {
@@ -101,7 +98,7 @@ namespace GestorPacientes.Infrastucture.Persistance.Contexts
                 .HasOne(a => a.Patient)
                 .WithMany(p => p.Appointments)
                 .HasForeignKey(a => a.PatientId)
-                .OnDelete(DeleteBehavior.Restrict); // Change to Restrict to avoid cascading
+                .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Appointment>()
                 .HasOne(a => a.Doctor)

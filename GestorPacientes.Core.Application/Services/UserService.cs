@@ -1,21 +1,22 @@
 ﻿using GestorPacientes.Core.Application.Interfaces.Repositories;
 using GestorPacientes.Core.Application.Interfaces.Services;
-using GestorPacientes.Core.Application.ViewModels;
 using GestorPacientes.Core.Application.ViewModels.User;
 using GestorPacientes.Core.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 
 namespace GestorPacientes.Core.Application.Services
 {
     public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
+        private readonly UserManager<User> _userManager;
+        private readonly IPasswordHasher<User> _passwordHasher;
 
-        public UserService(IUserRepository userRepository)
+        public UserService(IUserRepository userRepository, UserManager<User> userManager, IPasswordHasher<User> passwordHasher)
         {
             _userRepository = userRepository;
+            _userManager = userManager;
+            _passwordHasher = passwordHasher;
         }
 
         public async Task Add(SaveUserViewModel vm)
@@ -26,10 +27,13 @@ namespace GestorPacientes.Core.Application.Services
                 FirstName = vm.FirstName,
                 LastName = vm.LastName,
                 Email = vm.Email,
-                PasswordHash = vm.PasswordHash,
+                PasswordHash = vm.Password,
                 IsAdmin = vm.IsAdmin
-                // You may need to map other properties from the view model
             };
+
+            // Hashea la contraseña para mayor seguridad
+            var hashedPassword = _passwordHasher.HashPassword(user, vm.Password);
+            user.PasswordHash = hashedPassword;
 
             await _userRepository.AddAsync(user);
         }
@@ -58,7 +62,6 @@ namespace GestorPacientes.Core.Application.Services
                     LastName = user.LastName,
                     Email = user.Email,
                     IsAdmin = user.IsAdmin
-                    // You may need to map other properties from the entity
                 });
             }
 
@@ -78,7 +81,6 @@ namespace GestorPacientes.Core.Application.Services
                     LastName = user.LastName,
                     Email = user.Email,
                     IsAdmin = user.IsAdmin
-                    // You may need to map other properties from the entity
                 };
             }
 
@@ -97,10 +99,27 @@ namespace GestorPacientes.Core.Application.Services
                 user.Email = vm.Email;
                 user.PasswordHash = vm.Password;
                 user.IsAdmin = vm.IsAdmin;
-                // You may need to map other properties from the view model
+
+                // Hashea la contraseña para mayor seguridad
+                var hashedPassword = _passwordHasher.HashPassword(user, vm.Password);
+                user.PasswordHash = hashedPassword;
 
                 await _userRepository.UpdateAsync(user);
             }
+        }
+
+        public async Task<bool> VerifyPassword(int userId, string password)
+        {
+            var user = await _userRepository.GetByIdAsync(userId);
+
+            if (user != null)
+            {
+                var result = _passwordHasher.VerifyHashedPassword(user, user.PasswordHash, password);
+
+                return result == PasswordVerificationResult.Success;
+            }
+
+            return false;
         }
     }
 }
