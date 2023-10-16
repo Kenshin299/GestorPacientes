@@ -7,14 +7,15 @@ using System.Threading.Tasks;
 
 namespace GestorPacientes.Core.Domain.Entities
 {
-    public class User : BaseEntity
+    public class Doctor : BaseEntity
     {
-        public string UserName { get; set; }
+        public int DoctorId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }
-        public string PasswordHash { get; set; }
-        public bool IsAdmin { get; set; }
-        public ICollection<IdentityUserRole<string>> Roles { get; set; }
+        public string Phone { get; set; }
+        public string LicenseNumber { get; set; }
+        public string? Photo { get; set; }
+        public ICollection<Patient> Patients { get; set; }
     }
 }
