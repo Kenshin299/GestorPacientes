@@ -8,12 +8,6 @@
 
   <ItemGroup>
     <Folder Include="Services\" />
-    <Folder Include="ViewModels\Appointmens\" />
-    <Folder Include="ViewModels\Doctor\" />
-    <Folder Include="ViewModels\LabResult\" />
-    <Folder Include="ViewModels\LabTest\" />
-    <Folder Include="ViewModels\Patient\" />
-    <Folder Include="ViewModels\User\" />
   </ItemGroup>
 
   <ItemGroup>
