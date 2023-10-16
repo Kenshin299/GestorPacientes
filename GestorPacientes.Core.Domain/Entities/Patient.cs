@@ -1,15 +1,9 @@
 ﻿using GestorPacientes.Core.Domain.Common;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GestorPacientes.Core.Domain.Entities
 {
     public class Patient : BaseEntity
     {
-        public int PatientId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Phone { get; set; }
@@ -19,6 +13,8 @@ namespace GestorPacientes.Core.Domain.Entities
         public bool IsSmoker { get; set; }
         public string Allergies { get; set; }
         public string? Photo { get; set; }
+        public int DoctorId { get; set; }
         public Doctor PrimaryDoctor { get; set; }
+        public ICollection<Appointment> Appointments { get; set; } // Add this navigation property
     }
 }

@@ -1,7 +1,13 @@
+using GestorPacientes.Infrastucture.Persistance;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
 builder.Services.AddControllersWithViews();
+builder.Services.AddPersistenceInfrastructure(builder.Configuration);
 
 var app = builder.Build();
 
