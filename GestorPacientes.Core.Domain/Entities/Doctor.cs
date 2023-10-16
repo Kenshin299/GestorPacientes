@@ -11,6 +11,6 @@ namespace GestorPacientes.Core.Domain.Entities
         public string LicenseNumber { get; set; }
         public string? Photo { get; set; }
         public ICollection<Patient> Patients { get; set; }
-        public ICollection<Appointment> Appointments { get; set; } // Add this navigation property
+        public ICollection<Appointment> Appointments { get; set; }
     }
 }
