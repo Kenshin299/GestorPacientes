@@ -4,7 +4,7 @@ using GestorPacientes.Infrastucture.Persistance.Contexts;
 
 namespace GestorPacientes.Infrastructure.Persistence.Repositories
 {
-    public class AppointmentRepository : GenericRepository<Appointment>, IAppointmentsRepository
+    public class AppointmentRepository : GenericRepository<Appointment>, IAppointmentRepository
     {
         private readonly ApplicationDbContext _context;
         public AppointmentRepository(ApplicationDbContext applicationContext) : base(applicationContext)

@@ -29,7 +29,7 @@ namespace GestorPacientes.Infrastucture.Persistance
             }
 
             services.AddTransient(typeof(IGenericRepository<>), typeof(GenericRepository<>));
-            services.AddTransient<IAppointmentsRepository, AppointmentRepository>();
+            services.AddTransient<IAppointmentRepository, AppointmentRepository>();
             services.AddTransient<IDoctorRepository, DoctorRepository>();
             services.AddTransient<IPatientRepository, PatientRepository>();
             services.AddTransient<ILabTestRepository, LabTestRepository>();

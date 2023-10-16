@@ -1,6 +1,5 @@
 using GestorPacientes.Infrastucture.Persistance;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
+using GestorPacientes.Core.Application;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,6 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddPersistenceInfrastructure(builder.Configuration);
+builder.Services.AddApplicationServices(builder.Configuration);
 
 var app = builder.Build();
 

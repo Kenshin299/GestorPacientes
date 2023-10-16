@@ -2,7 +2,7 @@
 
 namespace GestorPacientes.Core.Application.Interfaces.Repositories
 {
-    public interface IAppointmentsRepository : IGenericRepository<Appointment>
+    public interface IAppointmentRepository : IGenericRepository<Appointment>
     {
     }
 }
