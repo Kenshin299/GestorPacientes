@@ -108,9 +108,9 @@ namespace GestorPacientes.Core.Application.Services
             }
         }
 
-        public async Task<bool> VerifyPassword(int userId, string password)
+        public async Task<bool> VerifyPassword(string userName, string password)
         {
-            var user = await _userRepository.GetByIdAsync(userId);
+            var user = await _userRepository.GetByUserNameAsync(userName);
 
             if (user != null)
             {
