@@ -108,13 +108,13 @@ namespace GestorPacientes.Core.Application.Services
             }
         }
 
-        public async Task<bool> VerifyPassword(string userName, string password)
+        public async Task<bool> VerifyPassword(LoginViewModel user)
         {
-            var user = await _userRepository.GetByUserNameAsync(userName);
+            var validate = await _userRepository.GetByUserNameAsync(user.Username);
 
             if (user != null)
             {
-                var result = _passwordHasher.VerifyHashedPassword(user, user.PasswordHash, password);
+                var result = _passwordHasher.VerifyHashedPassword(validate, validate.PasswordHash, user.Password);
 
                 return result == PasswordVerificationResult.Success;
             }

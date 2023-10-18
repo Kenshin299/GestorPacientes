@@ -39,24 +39,6 @@ namespace GestorPacientes.Controllers
 
                 if(_userService.VerifyPassword(model.Username, model.Password).Result)
                 { 
-                    // Sign in the user
-                    var claims = new List<Claim>
-                    {
-                        new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                                new Claim(ClaimTypes.Name, user.UserName),
-                    };
-
-                    var roles = await _userManager.GetRolesAsync(user);
-                    foreach (var role in roles)
-                    {
-                        claims.Add(new Claim(ClaimTypes.Role, role));
-                    }
-
-                    var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-
-                    var principal = new ClaimsPrincipal(identity);
-                    await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, new AuthenticationProperties { IsPersistent = model.RememberMe });
-
                     // Check user's role and redirect accordingly
                     if (user.IsAdmin)
                     {
