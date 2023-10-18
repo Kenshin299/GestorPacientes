@@ -1,0 +1,34 @@
+﻿@model List<GestorPacientes.Core.Application.ViewModels.Doctor.DoctorViewModel>
+
+<h2>Medical Professional Maintenance</h2>
+
+<a asp-action="Create" class="btn btn-primary">Create Medical Professional</a>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>License Number</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var medicalProfessional in Model)
+        {
+            <tr>
+                <td>@medicalProfessional.FirstName</td>
+                <td>@medicalProfessional.LastName</td>
+                <td>@medicalProfessional.Email</td>
+                <td>@medicalProfessional.Phone</td>
+                <td>@medicalProfessional.LicenseNumber</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@medicalProfessional.Id">Edit</a> |
+                    <a asp-action="Delete" asp-route-id="@medicalProfessional.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

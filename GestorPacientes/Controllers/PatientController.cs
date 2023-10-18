@@ -1,49 +1,42 @@
 ﻿using GestorPacientes.Core.Application.Interfaces.Services;
-using GestorPacientes.Core.Application.ViewModels.User;
+using GestorPacientes.Core.Application.ViewModels.Patient;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
 
 namespace GestorPacientes.Controllers
 {
-    public class UserController : Controller
+    public class PatientController : Controller
     {
-        private readonly IUserService _userService;
-        private readonly ILogger<UserController> _logger;
+        private readonly IPatientService _patientService;
+        private readonly ILogger<PatientController> _logger;
 
-        public UserController(IUserService userService, ILogger<UserController> logger)
+        public PatientController(IPatientService patientService, ILogger<PatientController> logger)
         {
-            _userService = userService;
+            _patientService = patientService;
             _logger = logger;
         }
 
         public async Task<IActionResult> Index()
         {
-            var users = await _userService.GetAllViewModel();
+            var users = await _patientService.GetAllViewModel();
             return View(users);
         }
 
         public IActionResult Create()
         {
-            var viewModel = new SaveUserViewModel();
+            var viewModel = new SavePatientViewModel();
             return View(viewModel);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(SaveUserViewModel viewModel)
+        public async Task<IActionResult> Create(SavePatientViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
-                if (await _userService.UsernameExists(viewModel.UserName))
-                {
-                    ModelState.AddModelError(nameof(viewModel.UserName), "El usuario ya existe.");
-                }
-                else
-                {
-                    await _userService.Add(viewModel);
-                    return RedirectToAction("Index");
-                }
+                await _patientService.Add(viewModel);
+                return RedirectToAction("Index");
             }
             return View(viewModel);
         }
@@ -55,7 +48,7 @@ namespace GestorPacientes.Controllers
                 return NotFound();
             }
 
-            var user = await _userService.GetByIdSaveViewModel(id.Value);
+            var user = await _patientService.GetByIdSaveViewModel(id.Value);
             if (user == null)
             {
                 return NotFound();
@@ -66,7 +59,7 @@ namespace GestorPacientes.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, SaveUserViewModel viewModel)
+        public async Task<IActionResult> Edit(int id, SavePatientViewModel viewModel)
         {
             if (id != viewModel.Id)
             {
@@ -75,15 +68,8 @@ namespace GestorPacientes.Controllers
 
             if (ModelState.IsValid)
             {
-                if (await _userService.UsernameExists(viewModel.UserName))
-                {
-                    ModelState.AddModelError(nameof(viewModel.UserName), "El usuario ya existe.");
-                }
-                else
-                {
-                    await _userService.Update(viewModel);
-                    return RedirectToAction("Index");
-                }
+                await _patientService.Update(viewModel);
+                return RedirectToAction("Index");
             }
 
             return View(viewModel);
@@ -96,7 +82,7 @@ namespace GestorPacientes.Controllers
                 return NotFound();
             }
 
-            var user = await _userService.GetByIdSaveViewModel(id.Value);
+            var user = await _patientService.GetByIdSaveViewModel(id.Value);
             if (user == null)
             {
                 return NotFound();
@@ -109,7 +95,7 @@ namespace GestorPacientes.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            await _userService.Delete(id);
+            await _patientService.Delete(id);
             return RedirectToAction("Index");
         }
     }

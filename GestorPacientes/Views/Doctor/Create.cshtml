@@ -1,0 +1,39 @@
+﻿@model GestorPacientes.Core.Application.ViewModels.Doctor.SaveDoctorViewModel
+
+<h2>Create Medical Professional</h2>
+
+<div class="d-flex justify-content-center align-items-center">
+    <form asp-action="Create" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+            <label asp-for="FirstName">Name</label>
+            <input asp-for="FirstName" class="form-control" required>
+            <span asp-validation-for="FirstName" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="LastName">Last Name</label>
+            <input asp-for="LastName" class="form-control" required>
+            <span asp-validation-for="LastName" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Email">Email</label>
+            <input asp-for="Email" class="form-control" type="email" required>
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Phone">Phone</label>
+            <input asp-for="Phone" class="form-control" required>
+            <span asp-validation-for="Phone" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="LicenseNumber">License Number</label>
+            <input asp-for="LicenseNumber" class="form-control" required>
+            <span asp-validation-for="LicenseNumber" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Photo">Photo</label>
+            <input asp-for="Photo" class="form-control-file" type="file">
+            <span asp-validation-for="Photo" class="text-danger"></span>
+        </div>
+        <button type="submit" class="btn btn-primary mt-2">Create Medical Professional</button>
+    </form>
+</div>
