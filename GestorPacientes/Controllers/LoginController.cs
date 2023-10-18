@@ -37,7 +37,9 @@ namespace GestorPacientes.Controllers
                     return View(model);
                 }
 
-                if(_userService.VerifyPassword(model.Username, model.Password).Result)
+                var user = new UserViewModel();
+
+                if(_userService.VerifyPassword(model).Result)
                 { 
                     // Check user's role and redirect accordingly
                     if (user.IsAdmin)

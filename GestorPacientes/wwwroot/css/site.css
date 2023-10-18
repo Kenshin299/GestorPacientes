@@ -18,5 +18,58 @@ html {
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
+    color: var(--text);
+    background-color: var(--background);
+}
+
+:root {
+    --text: #000000;
+    --background: #ffffff;
+    --primary: #3d68b0;
+    --secondary: #173c78;
+    --accent: #de3213;
+}
+
+body {
+    color: var(--text);
+    background-color: var(--background);
+}
+
+.list-group-item {
+    color: var(--text);
+    background-color: var(--background);
+    border: 1px solid var(--secondary);
+}
+
+    .list-group-item a {
+        text-decoration: none;
+        color: var(--primary);
+    }
+
+.navbar {
+    background-color: var(--background);
+    border-bottom: 1px solid var(--secondary);
+}
+
+    .navbar .navbar-brand, .navbar .navbar-toggler-icon, .navbar .nav-link {
+        color: var(--text);
+    }
+
+    .navbar .navbar-toggler-icon {
+        border: 1px solid var(--text);
+    }
+
+.container {
+    background-color: var(--background);
+}
+
+    .container .text-dark {
+        color: var(--text);
+    }
+
+.footer {
+    background-color: var(--background);
+    border-top: 1px solid var(--secondary);
+    color: var(--text);
 }

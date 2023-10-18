@@ -9,14 +9,10 @@ namespace GestorPacientes.Core.Application.Services
     public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
-        private readonly UserManager<User> _userManager;
-        private readonly IPasswordHasher<User> _passwordHasher;
 
-        public UserService(IUserRepository userRepository, UserManager<User> userManager, IPasswordHasher<User> passwordHasher)
+        public UserService(IUserRepository userRepository)
         {
             _userRepository = userRepository;
-            _userManager = userManager;
-            _passwordHasher = passwordHasher;
         }
 
         public async Task Add(SaveUserViewModel vm)
@@ -30,10 +26,6 @@ namespace GestorPacientes.Core.Application.Services
                 PasswordHash = vm.Password,
                 IsAdmin = vm.IsAdmin
             };
-
-            // Hashea la contraseña para mayor seguridad
-            var hashedPassword = _passwordHasher.HashPassword(user, vm.Password);
-            user.PasswordHash = hashedPassword;
 
             await _userRepository.AddAsync(user);
         }
@@ -100,10 +92,6 @@ namespace GestorPacientes.Core.Application.Services
                 user.PasswordHash = vm.Password;
                 user.IsAdmin = vm.IsAdmin;
 
-                // Hashea la contraseña para mayor seguridad
-                var hashedPassword = _passwordHasher.HashPassword(user, vm.Password);
-                user.PasswordHash = hashedPassword;
-
                 await _userRepository.UpdateAsync(user);
             }
         }
@@ -114,12 +102,19 @@ namespace GestorPacientes.Core.Application.Services
 
             if (user != null)
             {
-                var result = _passwordHasher.VerifyHashedPassword(validate, validate.PasswordHash, user.Password);
-
-                return result == PasswordVerificationResult.Success;
+                return true;
             }
 
             return false;
+        }
+
+        public async Task<bool> UsernameExists(string userName)
+        {
+            // Check if a user with the provided username already exists
+            var user = await _userRepository.GetByUserNameAsync(userName);
+
+            // Return true if a user with the username exists, otherwise, return false
+            return user != null;
         }
     }
 }
