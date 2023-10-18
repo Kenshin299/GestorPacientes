@@ -2,24 +2,14 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="container">
-    <div class="row">
-        <div class="col-md-6">
-            <h2>Menu</h2>
-            <ul class="list-group">
-               @*  @if (User.IsInRole("Administrator"))
-                { *@
-                    <li class="list-group-item"><a href="#">User Maintenance</a></li>
-                    <li class="list-group-item"><a href="#">Doctor Maintenance</a></li>
-                    <li class="list-group-item"><a href="#">Laboratory Test Maintenance</a></li>
-                @* } *@
-                @* @if (User.IsInRole("Assistant"))
-                { *@
-                    <li class="list-group-item"><a href="#">Patient Maintenance</a></li>
-                    <li class="list-group-item"><a href="#">Appointment Maintenance</a></li>
-                    <li class="list-group-item"><a href="#">Laboratory Test Results Maintenance</a></li>
-               @*  } *@
-            </ul>
-        </div>
-    </div>
+<div class="container w-50">
+    <h2>Menu</h2>
+    <ul class="list-group">
+        <li class="list-group-item"><a href="User">User Maintenance</a></li>
+        <li class="list-group-item"><a href="#">Doctor Maintenance</a></li>
+        <li class="list-group-item"><a href="#">Laboratory Test Maintenance</a></li>
+        <li class="list-group-item"><a href="#">Patient Maintenance</a></li>
+        <li class="list-group-item"><a href="#">Appointment Maintenance</a></li>
+        <li class="list-group-item"><a href="#">Laboratory Test Results Maintenance</a></li>
+    </ul>
 </div>

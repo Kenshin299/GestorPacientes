@@ -1,6 +1,8 @@
 ﻿using GestorPacientes.Core.Application.Interfaces.Services;
 using GestorPacientes.Core.Application.ViewModels.User;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using System.Threading.Tasks;
 
 namespace GestorPacientes.Controllers
 {
@@ -15,34 +17,30 @@ namespace GestorPacientes.Controllers
             _logger = logger;
         }
 
-        // GET: /User
         public async Task<IActionResult> Index()
         {
             var users = await _userService.GetAllViewModel();
             return View(users);
         }
 
-        // GET: /User/Create
         public IActionResult Create()
         {
-            return View();
+            var viewModel = new SaveUserViewModel();
+            return View(viewModel);
         }
 
-        // POST: /User/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(SaveUserViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
-                // Check if the username already exists
                 if (await _userService.UsernameExists(viewModel.UserName))
                 {
-                    ModelState.AddModelError(string.Empty, "The username already exists.");
+                    ModelState.AddModelError(nameof(viewModel.UserName), "The username already exists.");
                 }
                 else
                 {
-                    // Other validation and user creation logic here
                     await _userService.Add(viewModel);
                     return RedirectToAction("Index");
                 }
@@ -50,7 +48,6 @@ namespace GestorPacientes.Controllers
             return View(viewModel);
         }
 
-        // GET: /User/Edit/1
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -67,7 +64,6 @@ namespace GestorPacientes.Controllers
             return View(user);
         }
 
-        // POST: /User/Edit/1
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, SaveUserViewModel viewModel)
@@ -79,14 +75,12 @@ namespace GestorPacientes.Controllers
 
             if (ModelState.IsValid)
             {
-                // Check if the username already exists
                 if (await _userService.UsernameExists(viewModel.UserName))
                 {
-                    ModelState.AddModelError(string.Empty, "The username already exists.");
+                    ModelState.AddModelError(nameof(viewModel.UserName), "The username already exists.");
                 }
                 else
                 {
-                    // Other validation and user editing logic here
                     await _userService.Update(viewModel);
                     return RedirectToAction("Index");
                 }
@@ -95,7 +89,6 @@ namespace GestorPacientes.Controllers
             return View(viewModel);
         }
 
-        // GET: /User/Delete/1
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -112,7 +105,6 @@ namespace GestorPacientes.Controllers
             return View(user);
         }
 
-        // POST: /User/Delete/1
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -121,5 +113,4 @@ namespace GestorPacientes.Controllers
             return RedirectToAction("Index");
         }
     }
-
 }

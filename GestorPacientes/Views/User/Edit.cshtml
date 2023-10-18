@@ -1,5 +1,38 @@
 ﻿@model GestorPacientes.Core.Application.ViewModels.User.SaveUserViewModel
 
-<form asp-action="Edit" asp-route-id="@Model.Id" method="post">
-    <!-- Form fields here with pre-filled values -->
-</form>
+<div class="d-flex justify-content-center align-items-center">
+    <form asp-action="Edit" asp-route-id="@Model.Id" method="post" class="col-md-6">
+        <div class="form-group">
+            <label for="FirstName">Name</label>
+            <input type="text" class="form-control form-control" id="FirstName" name="FirstName" value="@Model.FirstName" required>
+        </div>
+        <div class="form-group">
+            <label for="LastName">Last Name</label>
+            <input type="text" class="form-control" id="LastName" name="LastName" value="@Model.LastName" required>
+        </div>
+        <div class="form-group">
+            <label for="Email">Email</label>
+            <input type="email" class="form-control" id="Email" name="Email" value="@Model.Email" required>
+        </div>
+        <div class="form-group">
+            <label for="UserName">Username</label>
+            <input type="text" class="form-control" id="UserName" name="UserName" value "@Model.UserName" required>
+        </div>
+        <div class="form-group">
+            <label for="Password">Password</label>
+            <input type="password" class="form-control" id="Password" name="Password" required>
+        </div>
+        <div class="form-group">
+            <label for="ConfirmPassword">Confirm Password</label>
+            <input type="password" class="form-control" id="ConfirmPassword" name="ConfirmPassword" required>
+        </div>
+        <div class="form-group">
+            <label for="IsAdmin">User Type</label>
+            <select asp-for="IsAdmin" class="form-control" id="IsAdmin" name="IsAdmin">
+                <option value="true">Administrator</option>
+                <option value="false">Assistant</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary mt-2">Save User</button>
+    </form>
+</div>

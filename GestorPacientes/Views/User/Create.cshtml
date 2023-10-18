@@ -1,5 +1,38 @@
-﻿@model GestorPacientes.Core.Application.ViewModels.User.UserViewModel
+﻿@model GestorPacientes.Core.Application.ViewModels.User.SaveUserViewModel
 
-<form asp-action="Create" method="post">
-    <!-- Form fields here -->
-</form>
+<div class="d-flex justify-content-center align-items-center">
+    <form asp-action="Create" method="post" class="col-md-6">
+        <div class="form-group">
+            <label for="FirstName">Name</label>
+            <input type="text" class="form-control" id="FirstName" name="FirstName" placeholder="Name" value="@Model.FirstName" required>
+        </div>
+        <div class="form-group">
+            <label for="LastName">Last Name</label>
+            <input type="text" class="form-control" id="LastName" name="LastName" placeholder="Last Name" value="@Model.LastName" required>
+        </div>
+        <div class="form-group">
+            <label for="Email">Email</label>
+            <input type="email" class="form-control" id="Email" name="Email" placeholder="Email" value="@Model.Email" required>
+        </div>
+        <div class="form-group">
+            <label for="UserName">Username</label>
+            <input type="text" class="form-control" id="UserName" name="UserName" placeholder="Username" value="@Model.UserName" required>
+        </div>
+        <div class="form-group">
+            <label for="Password">Password</label>
+            <input type="password" class="form-control" id="Password" name="Password" placeholder="Password" required>
+        </div>
+        <div class="form-group">
+            <label for="ConfirmPassword">Confirm Password</label>
+            <input type="password" class="form-control" id="ConfirmPassword" name="ConfirmPassword" placeholder="Confirm Password" required>
+        </div>
+        <div class="form-group">
+            <label for="IsAdmin">User Type</label>
+            <select class="form-control" id="IsAdmin" name="IsAdmin" required>
+                <option value="true">Administrator</option>
+                <option value="false">Assistant</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary mt-2">Create User</button>
+    </form>
+</div>
