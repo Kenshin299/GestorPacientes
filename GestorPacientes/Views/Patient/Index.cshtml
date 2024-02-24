@@ -1,8 +1,8 @@
 ﻿@model List<GestorPacientes.Core.Application.ViewModels.Patient.PatientViewModel>
 
 <div class="container">
-    <h2>User Maintenance</h2>
-    <a asp-action="Create" class="btn btn-primary">Create New User</a>
+    <h2>Patient Maintenance</h2>
+    <a asp-action="Create" class="btn btn-primary">Create New Patient</a>
     <table class="table">
         <thead>
             <tr>
@@ -33,8 +33,8 @@
                     <td>@patient.Photo</td>
                     <td>Actions</td>
                     <td>
-                        <a asp-action="Edit" asp-route-id="@user.Id">Edit</a> |
-                        <a asp-action="Delete" asp-route-id="@user.Id">Delete</a>
+                        <a asp-action="Edit" asp-route-id="@patient.Id">Edit</a> |
+                        <a asp-action="Delete" asp-route-id="@patient.Id">Delete</a>
                     </td>
                 </tr>
             }

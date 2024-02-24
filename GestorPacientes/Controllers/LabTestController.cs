@@ -1,49 +1,51 @@
 ﻿using GestorPacientes.Core.Application.Interfaces.Services;
-using GestorPacientes.Core.Application.ViewModels.User;
+using GestorPacientes.Core.Application.Services;
+using GestorPacientes.Core.Application.ViewModels.LabTest;
+using GestorPacientes.Core.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
 
 namespace GestorPacientes.Controllers
 {
-    public class UserController : Controller
+    public class LabTestController : Controller
     {
-        private readonly IUserService _userService;
-        private readonly ILogger<UserController> _logger;
+        private readonly ILabTestService _labTestService;
+        private readonly ILogger<LabTestController> _logger;
 
-        public UserController(IUserService userService, ILogger<UserController> logger)
+        public LabTestController(ILabTestService labTestService, ILogger<LabTestController> logger)
         {
-            _userService = userService;
+            _labTestService = labTestService;
             _logger = logger;
         }
 
         public async Task<IActionResult> Index()
         {
-            var users = await _userService.GetAllViewModel();
+            var users = await _labTestService.GetAllViewModel();
             return View(users);
         }
 
         public IActionResult Create()
         {
-            var viewModel = new SaveUserViewModel();
+            var viewModel = new SaveLabTestViewModel();
             return View(viewModel);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(SaveUserViewModel viewModel)
+        public async Task<IActionResult> Create(SaveLabTestViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
-                if (await _userService.UsernameExists(viewModel.UserName))
+               /* if (await _labTestService.(viewModel.UserName))
                 {
                     ModelState.AddModelError(nameof(viewModel.UserName), "El usuario ya existe.");
                 }
                 else
-                {
-                    await _userService.Add(viewModel);
+                {*/
+                    await _labTestService.Add(viewModel);
                     return RedirectToAction("Index");
-                }
+                //}
             }
             return View(viewModel);
         }
@@ -55,18 +57,18 @@ namespace GestorPacientes.Controllers
                 return NotFound();
             }
 
-            var user = await _userService.GetByIdSaveViewModel(id.Value);
-            if (user == null)
+            var labTest = await _labTestService.GetByIdSaveViewModel(id.Value);
+            if (labTest == null)
             {
                 return NotFound();
             }
 
-            return View(user);
+            return View(labTest);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, SaveUserViewModel viewModel)
+        public async Task<IActionResult> Edit(int id, SaveLabTestViewModel viewModel)
         {
             if (id != viewModel.Id)
             {
@@ -75,15 +77,15 @@ namespace GestorPacientes.Controllers
 
             if (ModelState.IsValid)
             {
-                if (await _userService.UsernameExists(viewModel.UserName))
+               /* if (await _labTestService.UsernameExists(viewModel.UserName))
                 {
                     ModelState.AddModelError(nameof(viewModel.UserName), "El usuario ya existe.");
-                }
-                else
-                {
-                    await _userService.Update(viewModel);
+                }*/
+               /* else
+                {*/
+                    await _labTestService.Update(viewModel);
                     return RedirectToAction("Index");
-                }
+                //}
             }
 
             return View(viewModel);
@@ -96,20 +98,20 @@ namespace GestorPacientes.Controllers
                 return NotFound();
             }
 
-            var user = await _userService.GetByIdSaveViewModel(id.Value);
-            if (user == null)
+            var labTest = await _labTestService.GetByIdSaveViewModel(id.Value);
+            if (labTest == null)
             {
                 return NotFound();
             }
 
-            return View(user);
+            return View();
         }
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            await _userService.Delete(id);
+            await _labTestService.Delete(id);
             return RedirectToAction("Index");
         }
     }

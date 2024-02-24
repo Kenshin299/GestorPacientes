@@ -1,40 +1,25 @@
-﻿@model List<GestorPacientes.Core.Application.ViewModels.Patient.PatientViewModel>
+﻿@model List<GestorPacientes.Core.Application.ViewModels.LabTest.LabTestViewModel>
 
 <div class="container">
-    <h2>User Maintenance</h2>
-    <a asp-action="Create" class="btn btn-primary">Create New User</a>
+    <h2>Lab Test Maintenance</h2>
+    <a asp-action="Create" class="btn btn-primary">Create Lab Test</a>
     <table class="table">
         <thead>
             <tr>
                 <th>Name</th>
-                <th>Last Name</th>
-                <th>Phone</th>
-                <th>Address</th>
-                <th>Identity Number</th>
-                <th>DateOfBirth</th>
-                <th>IsSmoker</th>
-                <th>Allergiesr</th>
-                <th>Photo</th>
-                <th>Actions</th>
+                <th>Lab Results</th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var patient in Model)
+            @foreach (var labTest in Model)
             {
                 <tr>
-                    <td>@patient.FirstName</td>
-                    <td>@patient.LastName</td>
-                    <td>@patient.Phone</td>
-                    <td>@patient.Address</td>
-                    <td>@patient.IdentityNumber</td>
-                    <td>@patient.DateOfBirth</td>
-                    <td>@patient.IsSmoker</td>
-                    <td>@patient.Allergies</td>
-                    <td>@patient.Photo</td>
+                    <td>@labTest.Name</td>
+                    <td>@labTest.LabResults</td>
                     <td>Actions</td>
                     <td>
-                        <a asp-action="Edit" asp-route-id="@user.Id">Edit</a> |
-                        <a asp-action="Delete" asp-route-id="@user.Id">Delete</a>
+                        <a asp-action="Edit" asp-route-id="@labTest.Id">Edit</a> |
+                        <a asp-action="Delete" asp-route-id="@labTest.Id">Delete</a>
                     </td>
                 </tr>
             }

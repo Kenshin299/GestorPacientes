@@ -1,49 +1,49 @@
 ﻿using GestorPacientes.Core.Application.Interfaces.Services;
-using GestorPacientes.Core.Application.ViewModels.User;
+using GestorPacientes.Core.Application.ViewModels.Appointmens;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
 
 namespace GestorPacientes.Controllers
 {
-    public class UserController : Controller
+    public class AppointmentController : Controller
     {
-        private readonly IUserService _userService;
-        private readonly ILogger<UserController> _logger;
+        private readonly IAppointmentService _appointmentService;
+        private readonly ILogger<AppointmentController> _logger;
 
-        public UserController(IUserService userService, ILogger<UserController> logger)
+        public AppointmentController(IAppointmentService appointmentService, ILogger<AppointmentController> logger)
         {
-            _userService = userService;
+            _appointmentService = appointmentService;
             _logger = logger;
         }
 
         public async Task<IActionResult> Index()
         {
-            var users = await _userService.GetAllViewModel();
+            var users = await _appointmentService.GetAllViewModel();
             return View(users);
         }
 
         public IActionResult Create()
         {
-            var viewModel = new SaveUserViewModel();
+            var viewModel = new SaveAppointmentViewModel();
             return View(viewModel);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(SaveUserViewModel viewModel)
+        public async Task<IActionResult> Create(SaveAppointmentViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
-                if (await _userService.UsernameExists(viewModel.UserName))
+                /*if (await _appointmentService.UsernameExists(viewModel.UserName))
                 {
                     ModelState.AddModelError(nameof(viewModel.UserName), "El usuario ya existe.");
                 }
                 else
-                {
-                    await _userService.Add(viewModel);
+                {*/
+                    await _appointmentService.Add(viewModel);
                     return RedirectToAction("Index");
-                }
+                //}
             }
             return View(viewModel);
         }
@@ -55,7 +55,7 @@ namespace GestorPacientes.Controllers
                 return NotFound();
             }
 
-            var user = await _userService.GetByIdSaveViewModel(id.Value);
+            var user = await _appointmentService.GetByIdSaveViewModel(id.Value);
             if (user == null)
             {
                 return NotFound();
@@ -66,7 +66,7 @@ namespace GestorPacientes.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, SaveUserViewModel viewModel)
+        public async Task<IActionResult> Edit(int id, SaveAppointmentViewModel viewModel)
         {
             if (id != viewModel.Id)
             {
@@ -75,15 +75,15 @@ namespace GestorPacientes.Controllers
 
             if (ModelState.IsValid)
             {
-                if (await _userService.UsernameExists(viewModel.UserName))
+                /*if (await _userService.UsernameExists(viewModel.UserName))
                 {
                     ModelState.AddModelError(nameof(viewModel.UserName), "El usuario ya existe.");
                 }
                 else
-                {
-                    await _userService.Update(viewModel);
+                {*/
+                    await _appointmentService.Update(viewModel);
                     return RedirectToAction("Index");
-                }
+                //}
             }
 
             return View(viewModel);
@@ -96,7 +96,7 @@ namespace GestorPacientes.Controllers
                 return NotFound();
             }
 
-            var user = await _userService.GetByIdSaveViewModel(id.Value);
+            var user = await _appointmentService.GetByIdSaveViewModel(id.Value);
             if (user == null)
             {
                 return NotFound();
@@ -109,7 +109,7 @@ namespace GestorPacientes.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            await _userService.Delete(id);
+            await _appointmentService.Delete(id);
             return RedirectToAction("Index");
         }
     }
